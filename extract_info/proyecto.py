@@ -1,4 +1,6 @@
 from datetime import date
+import json
+import re
 import os
 import boto3
 from botocore.exceptions import ClientError
@@ -45,16 +47,46 @@ def upload_file(file_name, bucket, object_name=None):
         return False
     return True
 
+HTML_EXTENSION = re.compile(r".*\.html$", re.IGNORECASE)
 
-def main():
+def app(event, context):
+
+    record = event["Records"][0]
+
+    if not HTML_EXTENSION.match(record["s3"]["object"]["key"]):
+        print("❌ El archivo no es un HTML")
+        return {
+            "statusCode": 400, # Bad request
+            "body": json.dumps({
+                "message": "El archivo no es un HTML",
+            }),
+        }
+    
+    file = record["s3"]["object"]["key"]
+
+    # Download the file
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.get_object(Bucket=record["s3"]["bucket"]["name"], Key=file)
+        html_content = response['Body'].read().decode('utf-8')
+    except ClientError as e:
+        print(f"❌ Error al descargar el archivo '{file}' del bucket '{record['s3']['bucket']['name']}': {e}")
+        return {
+            "statusCode": 500,
+            "body": json.dumps({
+                "message": "Error al descargar el archivo",
+            }),
+        }
+    
     curr_date = date.today().strftime("%Y-%m-%d")
-    os.makedirs(f"casas-final-{curr_date}", exist_ok=True)
-    with open('landing-casas-2025-03-09/001.html', 'r', encoding='utf-8') as file:
-        html_content = file.read()
-
     data = extract_info(html_content, curr_date)
-    save_to_csv(data, 'casas-final-2025-03-09/001.csv')
-    upload_file('casas-final-2025-03-09/001.csv', 'bucker-zappa-downloder-storage')
+    csv_file_name = f'/tmp/casas-final-{curr_date}/{file.replace(".html", "")}.csv'
+    save_to_csv(data, csv_file_name)
+    upload_file(csv_file_name, 'bucker-zappa-downloder-storage-csv')
 
-if __name__ == '__main__':
-    main()
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Apartaesudios guardados",
+        }),
+    }
