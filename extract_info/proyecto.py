@@ -35,7 +35,7 @@ def upload_file(file_name, bucket, object_name=None):
 
     # If S3 object_name was not specified, use file_name
     if object_name is None:
-        object_name = file_name
+        object_name = file_name.replace("/tmp/","")
 
     # Upload the file
     s3_client = boto3.client('s3')
@@ -77,10 +77,12 @@ def app(event, context):
                 "message": "Error al descargar el archivo",
             }),
         }
-    
+        
     curr_date = date.today().strftime("%Y-%m-%d")
+    os.makedirs(f"/tmp/casas-final-{curr_date}", exist_ok=True)
     data = extract_info(html_content, curr_date)
-    csv_file_name = f'/tmp/casas-final-{curr_date}/{file.replace(".html", "")}.csv'
+    csv_file_name = f'/tmp/casas-final-{curr_date}/{str(file.split("/")[1]).replace(".html", "")}.csv'
+    print(f"Guardando archivo {csv_file_name}")
     save_to_csv(data, csv_file_name)
     upload_file(csv_file_name, 'bucker-zappa-downloder-storage-csv')
 
