@@ -70,6 +70,6 @@ def app(event, context):
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "Hello world",
+            "message": "Se descargaron las páginas",
         }),
     }
