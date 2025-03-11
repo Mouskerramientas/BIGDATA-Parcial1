@@ -35,4 +35,4 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy Downloader Lambda Function
-        run: zappa update dev
+        run: AWS_PROFILE=default zappa update dev
