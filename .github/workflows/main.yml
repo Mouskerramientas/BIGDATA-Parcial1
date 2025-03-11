@@ -51,4 +51,6 @@ jobs:
 
       - name: Deploy Info Extracter Lambda function
         run: |
-          ls
+          source venv/bin/activate
+          cd info_extracter
+          zappa update dev
