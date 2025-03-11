@@ -44,4 +44,6 @@ jobs:
           echo "region=us-east-1" >> ~/.aws/config
 
       - name: Deploy Downloader Lambda Function
-        run: zappa update dev
+        run: |
+          source venv/bin/activate
+          zappa update dev
