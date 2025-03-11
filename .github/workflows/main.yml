@@ -35,6 +35,4 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy Downloader Lambda Function
-        run: |
-          cd downloader
-          zappa update dev
+        run: zappa update dev
