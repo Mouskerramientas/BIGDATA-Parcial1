@@ -1,6 +1,7 @@
 import requests
 
 from config import API_HEADERS, API_URL
+from utils import NotFoundException
 
 
 """
@@ -21,6 +22,9 @@ def fetch_page(page_index: int):
     response = requests.get(
         API_URL, params=query_params, headers=API_HEADERS
     )
+
+    if response.status_code == 404:
+        raise NotFoundException(f"❌ Error 404: Página no encontrada")
 
     if response.status_code != 200:
         raise Exception(f"❌ Error al descargar la página {page_index}: {response.status_code}")
