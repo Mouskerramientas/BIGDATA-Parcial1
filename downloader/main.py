@@ -14,7 +14,7 @@ def main():
     create_directory(dir_path)
 
     # Download and save the pages
-    pages_names = download_and_save_pages(curr_date, dir_path=dir_path)
+    pages_names = download_and_save_pages(dir_path)
 
     upload_pages_to_s3(pages_names)
 

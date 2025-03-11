@@ -1,20 +1,19 @@
 import boto3
 from config import HTML_BUCKET_NAME
-from requests import fetch_page
+from api_requests import fetch_page
 
 """
 Function that downloads a number of pages from the Mitula URL
-@param curr_date: Current date
 @param num_pages: Number of pages to download
 @return: List of HTML pages
 """
-def download_pages(curr_date: str, dir_path: str, num_pages: int,):
+def download_pages(dir_path: str, num_pages: int):
 
     pages = []
 
     for i in range(1, num_pages + 1):
         pages.append({
-            "file_name": f"{dir_path}-{curr_date}/{i:03}.html",
+            "file_name": f"{dir_path}/{i:03}.html",
             "content": fetch_page(i)
         })
 
@@ -22,12 +21,11 @@ def download_pages(curr_date: str, dir_path: str, num_pages: int,):
 
 """
 Function that downloads and saves a number of pages from the Mitula URL
-@param curr_date: Current date
 @param num_pages: Number of pages to download
 @return: List of file names
 """
-def download_and_save_pages(curr_date: str, dir_path: str, num_pages: int = 10):
-    pages = download_pages(curr_date, dir_path, num_pages)
+def download_and_save_pages(dir_path: str, num_pages: int = 10):
+    pages = download_pages(dir_path, num_pages)
 
     for page in pages:
         with open(page["file_name"], "w") as file:
