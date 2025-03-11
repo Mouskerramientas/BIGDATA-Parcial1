@@ -85,5 +85,4 @@ def test_extract_info_no_bathrooms():
 
     result = extract_info(html_content, curr_date)
 
-    # Compare both results
     assert result == expected_result
