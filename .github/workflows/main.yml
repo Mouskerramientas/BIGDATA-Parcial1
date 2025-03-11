@@ -48,3 +48,7 @@ jobs:
           source venv/bin/activate
           cd downloader
           zappa update dev
+
+      - name: Deploy Info Extracter Lambda function
+        run: |
+          ls
