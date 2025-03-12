@@ -10,13 +10,14 @@ Function to write the data to a CSV file
 @param filename: Name of the file to write
 @return: None
 """
-def save_to_csv(data, filename):
+def save_to_csv(filename, data):
     with open(filename, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(
             ['FechaDescarga', 'Barrio', 'Valor', 'NumHabitaciones', 'NumBanos', 'mts2']
         )
         writer.writerows(data)
+        
 """
 Function to upload a file to an S3 bucket
 @param file_name: Name of the file to upload
