@@ -23,6 +23,8 @@ Exception for Not Found Errors in requests
 Handles 404 errors
 """
 class NotFoundException(Exception):
+
+    
     """Custom Exception for Not Found Errors in requests"""
     def __init__(self, message):
         super().__init__(message)
