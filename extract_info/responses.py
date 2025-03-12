@@ -16,7 +16,7 @@ ERROR_RESPONSE = {
 }
 
 ERROR_NOT_FOUND_RESPONSE = {
-    "statusCode": 400, # Bad request
+    "statusCode": 400,
     "body": json.dumps({
         "message": "El archivo no es un HTML",
     }),

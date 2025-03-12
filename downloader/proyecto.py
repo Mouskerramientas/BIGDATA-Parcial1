@@ -1,6 +1,7 @@
 import json
 from main import main
 
+
 def app(event, context):
 
     try:
@@ -13,7 +14,7 @@ def app(event, context):
                 "message": "❌ Error en la descarga de las páginas",
             }),
         }
-   
+
     return {
         "statusCode": 200,
         "body": json.dumps({

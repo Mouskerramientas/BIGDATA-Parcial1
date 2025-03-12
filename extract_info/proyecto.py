@@ -15,5 +15,5 @@ def app(event, context):
         return ERROR_RESPONSE
     except NotFoundException:
         return ERROR_NOT_FOUND_RESPONSE
-    
+
     return SUCCESS_RESPONSE

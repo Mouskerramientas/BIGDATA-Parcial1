@@ -5,23 +5,23 @@ from parser import extract_and_parse_info
 from files import save_to_csv, upload_file
 
 
-"""
-Main function to run the program
-@param record: Record with the information of the file
-@return: None
-"""
 def main(record):
+    """
+    Main function to run the program
+    @param record: Record with the information of the file
+    @return: None
+    """
 
     file_name = record["s3"]["object"]["key"]
     bucket_name = record['s3']['bucket']['name']
 
     html_content = get_html_code(file_name, bucket_name)
-    
+
     if not html_content:
         raise NotFoundException("El archivo no es un HTML")
 
     curr_date = date.today().strftime("%Y-%m-%d")
-    
+
     create_directory(f"/tmp/casas-final-{curr_date}")
 
     data = extract_and_parse_info(html_content, curr_date)
