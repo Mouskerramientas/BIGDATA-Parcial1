@@ -18,9 +18,6 @@ def fetch_html_content(file: str, bucket_name: str):
 def get_html_code(file: str, bucket: str):
 
     if not check_html_extension(file): return None
-
-    with open(file, "r") as file:
-        return file.read()
     
     html_code = fetch_html_content(file, bucket)
 
