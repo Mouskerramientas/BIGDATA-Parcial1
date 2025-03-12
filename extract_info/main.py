@@ -22,7 +22,7 @@ def main(record):
 
     curr_date = date.today().strftime("%Y-%m-%d")
     
-    create_directory(f"/tmp/{curr_date}")
+    create_directory(f"/tmp/casas-final-{curr_date}")
 
     data = extract_and_parse_info(html_content, curr_date)
 
