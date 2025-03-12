@@ -6,7 +6,7 @@ import os
 # Agregar el directorio raíz del proyecto al PYTHONPATH
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../extract_info')))
 
-from proyecto import extract_info
+from parser import extract_and_parse_info
 
 
 def test_extract_empty_info():
@@ -15,7 +15,7 @@ def test_extract_empty_info():
 
     curr_date = "2025-03-10"
 
-    result = extract_info(html_content, curr_date)
+    result = extract_and_parse_info(html_content, curr_date)
 
     assert len(result) == 0
 
@@ -37,7 +37,7 @@ def test_extract_info_content():
 
     expected_result = [["2025-03-10", "Bogotá", "200000", "2", "1", "50"]]
 
-    result = extract_info(html_content, curr_date)
+    result = extract_and_parse_info(html_content, curr_date)
 
     # Compare both results
     assert result == expected_result
@@ -58,7 +58,7 @@ def test_extract_info_no_bathrooms():
 
     expected_result = [["2025-03-10", "Bogotá", "200000", "2", 0, "50"]]
 
-    result = extract_info(html_content, curr_date)
+    result = extract_and_parse_info(html_content, curr_date)
 
     assert result == expected_result
 
@@ -81,7 +81,7 @@ def test_extract_info():
 
     curr_date = "2025-03-10"
 
-    result = extract_info(html_content, curr_date)
+    result = extract_and_parse_info(html_content, curr_date)
 
     assert len(result) == 2
     assert result[0] == ["2025-03-10", "Bogotá", "200000", "2", "1", "50"]

@@ -15,12 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Configure python system
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: Set up virtual environment
+      - name: Create virtual environment and install dependencies
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -43,13 +43,13 @@ jobs:
           echo "[default]" > ~/.aws/config
           echo "region=us-east-1" >> ~/.aws/config
 
-      - name: Deploy Downloader Lambda Function
+      - name: Deploy Downloader Lambda Function on AWS with Zappa
         run: |
           source venv/bin/activate
           cd downloader
           zappa update dev
 
-      - name: Deploy Info Extracter Lambda function
+      - name: Deploy Info Extracter Lambda function on AWS with Zappa
         run: |
           source venv/bin/activate
           cd extract_info
