@@ -11,6 +11,7 @@ def app(event, context):
     except ClientError:
         return CLIENT_ERROR_RESPONSE
     except Exception as e:
+        print(f"❌ Se produjo un error inesperado: {e}")
         return ERROR_RESPONSE
     except NotFoundException:
         return ERROR_NOT_FOUND_RESPONSE
